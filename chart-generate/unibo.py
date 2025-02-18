@@ -32,13 +32,14 @@ ere = []
 periodi = []
 
 for L1 in data['hasTopConcept']:
-    print(name(L1),'\t',rank(L1),'\t',begin(L1),'->',end(L1))
     eoni.append({'name':name(L1), 'rank':rank(L1),'begin':begin(L1), 'end':end(L1)})
     for L2 in L1['narrower']:
-        print('\t',name(L2),'\t',rank(L2),'\t',begin(L2),'->',end(L2))
+        ere.append({'name':name(L2), 'rank':rank(L2),'begin':begin(L2), 'end':end(L2)})
         if 'narrower' in L2:
             for L3 in L2['narrower']:
-                print('\t\t',name(L3),'\t',rank(L3),'\t',begin(L3),'->',end(L3))
+                periodi.append({'name':name(L2), 'rank':rank(L2),'begin':begin(L2), 'end':end(L2)})
+
+                
 
     # eone
     # era
