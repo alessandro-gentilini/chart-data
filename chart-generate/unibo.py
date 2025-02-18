@@ -54,10 +54,26 @@ for item in eoni:
     name = item['name']
     
     rect = dwg.add(dwg.rect(insert=(0, top), size=(rect_width, bottom-top), fill=color))
+
+for item in ere:
+    top = item['end']
+    bottom = item['begin']
+    color = item['color']
+    name = item['name']
     
+    rect = dwg.add(dwg.rect(insert=(1000, top), size=(rect_width, bottom-top), fill=color))
+    
+for item in periodi:
+    top = item['end']
+    bottom = item['begin']
+    color = item['color']
+    name = item['name']
+    
+    rect = dwg.add(dwg.rect(insert=(2000, top), size=(rect_width, bottom-top), fill=color))
+
 dwg.save()
 
-print(eoni)
+
 
     # eone
     # era
