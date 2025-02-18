@@ -41,7 +41,7 @@ for L1 in data['hasTopConcept']:
         ere.append({'name':name(L2), 'rank':rank(L2),'begin':begin(L2), 'end':end(L2), 'color':color(L2)})
         if 'narrower' in L2:
             for L3 in L2['narrower']:
-                periodi.append({'name':name(L2), 'rank':rank(L2),'begin':begin(L2), 'end':end(L2), 'color':color(L3)})
+                periodi.append({'name':name(L3), 'rank':rank(L3),'begin':begin(L3), 'end':end(L3), 'color':color(L3)})
 
 dwg = svgwrite.Drawing('/home/ag/prj/chart-data/chart-generate/unibo.svg', profile='tiny')
 
@@ -54,6 +54,7 @@ for item in eoni:
     name = item['name']
     
     rect = dwg.add(dwg.rect(insert=(0, top), size=(rect_width, bottom-top), fill=color))
+    text = dwg.add(dwg.text(name, insert=(rect_width/2, (top+bottom)/2), fill='white', text_anchor='middle'))
 
 for item in ere:
     top = item['end']
@@ -62,6 +63,8 @@ for item in ere:
     name = item['name']
     
     rect = dwg.add(dwg.rect(insert=(1000, top), size=(rect_width, bottom-top), fill=color))
+    text = dwg.add(dwg.text(name, insert=(1000+rect_width/2, (top+bottom)/2), fill='white', text_anchor='middle'))
+
     
 for item in periodi:
     top = item['end']
@@ -70,8 +73,11 @@ for item in periodi:
     name = item['name']
     
     rect = dwg.add(dwg.rect(insert=(2000, top), size=(rect_width, bottom-top), fill=color))
+    text = dwg.add(dwg.text(name, insert=(2000+rect_width/2, (top+bottom)/2), fill='white', text_anchor='middle'))
 
 dwg.save()
+
+print(periodi)
 
 
 
