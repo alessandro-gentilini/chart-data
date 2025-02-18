@@ -1,4 +1,5 @@
 import json
+import svgwrite
 
 with open('./out/chart.json') as file:
     data = json.load(file)
@@ -37,12 +38,26 @@ periodi = []
 for L1 in data['hasTopConcept']:
     eoni.append({'name':name(L1), 'rank':rank(L1),'begin':begin(L1), 'end':end(L1), 'color':color(L1)})
     for L2 in L1['narrower']:
-        ere.append({'name':name(L2), 'rank':rank(L2),'begin':begin(L2), 'end':end(L2), 'color':color(L1)})
+        ere.append({'name':name(L2), 'rank':rank(L2),'begin':begin(L2), 'end':end(L2), 'color':color(L2)})
         if 'narrower' in L2:
             for L3 in L2['narrower']:
-                periodi.append({'name':name(L2), 'rank':rank(L2),'begin':begin(L2), 'end':end(L2), 'color':color(L1)})
+                periodi.append({'name':name(L2), 'rank':rank(L2),'begin':begin(L2), 'end':end(L2), 'color':color(L3)})
 
-                
+dwg = svgwrite.Drawing('/home/ag/prj/chart-data/chart-generate/unibo.svg', profile='tiny')
+
+rect_width = 1000
+
+for item in eoni:
+    top = item['end']
+    bottom = item['begin']
+    color = item['color']
+    name = item['name']
+    
+    rect = dwg.add(dwg.rect(insert=(0, top), size=(rect_width, bottom-top), fill=color))
+    
+dwg.save()
+
+print(eoni)
 
     # eone
     # era
