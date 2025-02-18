@@ -1,5 +1,6 @@
 import json
 import svgwrite
+import math
 
 with open('./out/chart.json') as file:
     data = json.load(file)
@@ -31,6 +32,12 @@ def end(field):
 def color(field):
     return field['color']
 
+def compress(x):
+    return x
+    return 500*math.pow(x,1/4)
+
+
+
 eoni = []
 ere = []
 periodi = []
@@ -48,8 +55,8 @@ dwg = svgwrite.Drawing('/home/ag/prj/chart-data/chart-generate/unibo.svg', profi
 rect_width = 1000
 
 for item in eoni:
-    top = item['end']
-    bottom = item['begin']
+    top = compress(item['end'])
+    bottom = compress(item['begin'])
     color = item['color']
     name = item['name']
     
@@ -57,8 +64,8 @@ for item in eoni:
     text = dwg.add(dwg.text(name, insert=(rect_width/2, (top+bottom)/2), fill='white', text_anchor='middle'))
 
 for item in ere:
-    top = item['end']
-    bottom = item['begin']
+    top = compress(item['end'])
+    bottom = compress(item['begin'])
     color = item['color']
     name = item['name']
     
@@ -67,8 +74,8 @@ for item in ere:
 
     
 for item in periodi:
-    top = item['end']
-    bottom = item['begin']
+    top = compress(item['end'])
+    bottom = compress(item['begin'])
     color = item['color']
     name = item['name']
     
@@ -77,7 +84,7 @@ for item in periodi:
 
 dwg.save()
 
-print(periodi)
+
 
 
 
