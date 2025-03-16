@@ -33,8 +33,8 @@ def color(field):
     return field['color']
 
 def compress(x):
-    return x
-    return 500*math.pow(x,1/4)
+    return x#math.log10(x)
+    #return 500*math.pow(x,1/4)
 
 
 
@@ -54,14 +54,18 @@ dwg = svgwrite.Drawing('/home/ag/prj/chart-data/chart-generate/unibo.svg', profi
 
 rect_width = 1000
 
+level = 0
+
 for item in eoni:
     top = compress(item['end'])
     bottom = compress(item['begin'])
     color = item['color']
     name = item['name']
     
-    rect = dwg.add(dwg.rect(insert=(0, top), size=(rect_width, bottom-top), fill=color))
-    text = dwg.add(dwg.text(name, insert=(rect_width/2, (top+bottom)/2), fill='white', text_anchor='middle'))
+    rect = dwg.add(dwg.rect(insert=(level*rect_width, top), size=(rect_width, bottom-top), fill=color))
+    text = dwg.add(dwg.text(name, insert=(level*rect_width+rect_width/2, (top+bottom)/2), fill='white', text_anchor='middle'))
+
+level = level+1
 
 for item in ere:
     top = compress(item['end'])
@@ -69,20 +73,25 @@ for item in ere:
     color = item['color']
     name = item['name']
     
-    rect = dwg.add(dwg.rect(insert=(1000, top), size=(rect_width, bottom-top), fill=color))
-    text = dwg.add(dwg.text(name, insert=(1000+rect_width/2, (top+bottom)/2), fill='white', text_anchor='middle'))
+    rect = dwg.add(dwg.rect(insert=(level*rect_width, top), size=(rect_width, bottom-top), fill=color))
+    text = dwg.add(dwg.text(name, insert=(level*rect_width+rect_width/2, (top+bottom)/2), fill='white', text_anchor='middle'))
 
-    
+level = level+1    
+
 for item in periodi:
     top = compress(item['end'])
     bottom = compress(item['begin'])
     color = item['color']
     name = item['name']
     
-    rect = dwg.add(dwg.rect(insert=(2000, top), size=(rect_width, bottom-top), fill=color))
-    text = dwg.add(dwg.text(name, insert=(2000+rect_width/2, (top+bottom)/2), fill='white', text_anchor='middle'))
+    rect = dwg.add(dwg.rect(insert=(level*rect_width, top), size=(rect_width, bottom-top), fill=color))
+    text = dwg.add(dwg.text(name, insert=(level*rect_width+rect_width/2, (top+bottom)/2), fill='white', text_anchor='middle'))
 
 dwg.save()
+
+print(eoni)
+print(ere)
+print(periodi)
 
 
 
