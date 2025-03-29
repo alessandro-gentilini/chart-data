@@ -85,14 +85,15 @@ raw_table = periodi_df[['name', 'end', 'begin', 'timespan']]
 colors = periodi_df[['color']]
 
 
-
-def condformat(row):
-    color = 'background-color: {}'.format(colors.iloc[row.name].color)
-    return (color, color, color, color)
-
-s = raw_table.style.apply(condformat, axis=1)
-
-html_table = s.hide(axis="index").to_html()
+html_table = "<table>"
+for index, row in raw_table.iterrows():
+    name = row['name']
+    end = row['end']
+    begin = row['begin']
+    timespan = row['timespan']
+    color = colors.loc[index, 'color']
+    html_table += f"<tr style='background-color: {color};'><td>{name}</td><td>{end}</td><td>{begin}</td><td>{timespan}</td></tr>\n"
+html_table += "</table>"
 print(html_table)
 
 
