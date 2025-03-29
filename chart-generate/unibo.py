@@ -2,6 +2,7 @@ import json
 import svgwrite
 import math
 import pandas as pd
+from PIL import Image
 
 with open('./out/chart.json') as file:
     data = json.load(file)
@@ -84,17 +85,53 @@ periodi_df['timespan'] = periodi_df['timespan'].apply(lambda x: str(int(x)) if x
 raw_table = periodi_df[['name', 'end', 'begin', 'timespan']]
 colors = periodi_df[['color']]
 
+for index, row in raw_table.iterrows():
+    name = row['name']
+    color = colors.loc[index, 'color']
+    image = Image.new('RGB', (100, 20), color)
+    image.save(f'{name}.png')
 
-html_table = "<table>"
+html_table = "<table>\n<thead>\n<tr>\n"
+html_table = html_table + "<th>name</th><th>end</th><th>begin</th><th>timespan</th>\n"
+html_table = html_table + "</tr>\n</thead>\n<tbody>"
 for index, row in raw_table.iterrows():
     name = row['name']
     end = row['end']
     begin = row['begin']
     timespan = row['timespan']
     color = colors.loc[index, 'color']
-    html_table += f"<tr style='background-color: {color};'><td>{name}</td><td>{end}</td><td>{begin}</td><td>{timespan}</td></tr>\n"
-html_table += "</table>"
-print(html_table)
+    html_table += f"<tr style='background-color: {color};'><td><img src='{name}.png'></td><td>{name}</td><td>{end}</td><td>{begin}</td><td>{timespan}</td></tr>\n"
+html_table += "</tbody>\n</table>"
+print(html_table)    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 dwg2 = svgwrite.Drawing('/home/ag/prj/chart-data/chart-generate/unibo2.svg', profile='tiny')
